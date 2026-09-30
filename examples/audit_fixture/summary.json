@@ -16,7 +16,7 @@
   "label_efficiency_pp_per_100_queries": 0.0,
   "pseudo_memory_error_rate": 0.08433734939759036,
   "pseudo_memory_size": 83,
-  "event_sha256": "29cd95ecc0b4959d497c98c63a236d72259589df50ab7b91d0b72ac665024fe2",
+  "event_sha256": "3dfe44b382ee21213d056272778fd587293df7a762b8ecad6c27191ebf5dff74",
   "config": {
     "num_classes": 4,
     "weight_learning_rate": 0.5,

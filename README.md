@@ -23,7 +23,7 @@ The command checks the event count, sequential positions, query count, online
 accuracy, and the SHA-256 recorded in `summary.json`. The fixture is not a
 benchmark result; it is a reproducible audit demonstration.
 
-Use tag `v1.0.1` for the manuscript release. It preserves file bytes across
+Use tag `v1.0.2` for the manuscript release. It preserves file bytes across
 Git checkouts so the fixture SHA-256 is unchanged on Windows and Linux. The
 full benchmark event archive and its per-run hash manifest are not included;
 the fixture verifies the audit procedure, not all reported benchmark results.
