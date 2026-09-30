@@ -1,0 +1,11 @@
+# Optional analysis dependencies. Ranges are not a historical lock.
+numpy>=1.26,<3
+pandas>=2.1,<4
+scipy>=1.11,<2
+matplotlib>=3.8,<4
+seaborn>=0.13,<1
+scikit-learn>=1.3,<2
+PyYAML>=6,<7
+# Parquet feature extraction only:
+pyarrow>=14
+Pillow>=10

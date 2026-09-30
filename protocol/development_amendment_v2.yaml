@@ -1,0 +1,25 @@
+amendment: 2
+status: "fixed before confirmatory seeds"
+reason: >-
+  Phase 1 seeds 0-4 showed that inverse verified-class coverage is unstable when
+  a stream contains long class-persistent blocks. The original 450 runs remain
+  archived and are not relabeled as confirmatory evidence.
+change:
+  strategy: "ask_or_adapt"
+  observable: "mean adjacent switch rate of model predictions within the current segment"
+  threshold: 0.35
+  rule: >-
+    If the switch rate is below 0.35, query the last sample in the segment;
+    otherwise query the maximum entropy-disagreement-coverage value.
+  label_use: "none"
+  causal_timing: "computed from pre-intervention predictions at segment close"
+confirmation:
+  seeds: [5, 6, 7, 8, 9]
+  streams: [iid_random, abrupt_domain, class_correlated]
+  budgets_percent: [0.1, 0.5, 1.0, 2.0, 5.0]
+  strategies: [random, periodic, entropy, margin, disagreement, ask_or_adapt]
+  frozen_after_this_file: true
+reporting:
+  - "Report the original Phase 1 diagnostic honestly."
+  - "Use seeds 5-9 for final between-policy claims."
+  - "Do not retune the threshold on confirmatory labels."

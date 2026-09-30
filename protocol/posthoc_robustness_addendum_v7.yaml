@@ -1,0 +1,40 @@
+protocol_name: posthoc_budget_and_noisy_oracle_robustness_v7
+registered_at_local: '2026-08-14'
+status: frozen_before_execution
+classification: posthoc_robustness_analysis
+controller:
+  strategy: ask_or_adapt_v2
+  pseudo_confidence: 0.80
+  pseudo_agreement: 0.75
+  persistence_switch_rate: 0.35
+  risk_entropy_threshold: 0.50
+  tuning: none
+common:
+  datasets: [PACS, OfficeHome, TerraIncognita]
+  backbones: [OpenAI_CLIP_ViT-B-16, OpenCLIP_ViT-L-14]
+  streams: [iid_random, abrupt_domain, class_correlated]
+  seeds: [20, 21, 22, 23, 24]
+budget_sweep:
+  oracle_noise: 0.0
+  budget_percent: [0.1, 0.5, 1.0, 2.0, 5.0]
+  expected_runs: 450
+noisy_oracle:
+  budget_percent: 1.0
+  symmetric_noise_rate: [0.1, 0.2]
+  noise_seed_offset: 32452843
+  expected_runs: 180
+  semantics: >-
+    Public dataset labels remain the immutable ground truth for offline scoring.
+    After a query is selected and its current prediction is frozen, the label
+    returned to the controller is independently replaced by a uniformly drawn
+    wrong class with the stated probability. The event log stores both values.
+reporting:
+  primary_metrics: [online_accuracy, worst_window_accuracy]
+  secondary_metrics: [gain_over_zero_shot, negative_adaptation_rate, label_efficiency_pp_per_100_queries]
+  uncertainty: mean_and_95_percent_bootstrap_CI_over_paired_conditions
+  multiplicity: none_descriptive_posthoc
+  constraints:
+    - Do not use this analysis to retune the controller.
+    - Label all findings as posthoc robustness evidence.
+    - Report realized noise counts and all datasets/backbones/streams.
+    - Do not imply that simulated symmetric noise represents all human errors.

@@ -1,0 +1,50 @@
+{
+  "run_id": "iid_random__seed0__budget1__ask_or_adapt",
+  "stream": "iid_random",
+  "seed": 0,
+  "budget_percent": 1.0,
+  "budget_count": 1,
+  "query_count": 1,
+  "strategy": "ask_or_adapt",
+  "samples": 120,
+  "online_accuracy": 0.8833333333333333,
+  "zero_shot_accuracy": 0.8833333333333333,
+  "gain_over_zero_shot": 0.0,
+  "worst_window_accuracy": 0.8833333333333331,
+  "negative_adaptation_rate": 0.016666666666666666,
+  "expected_calibration_error": 0.1377377904249358,
+  "label_efficiency_pp_per_100_queries": 0.0,
+  "pseudo_memory_error_rate": 0.08433734939759036,
+  "pseudo_memory_size": 83,
+  "event_sha256": "29cd95ecc0b4959d497c98c63a236d72259589df50ab7b91d0b72ac665024fe2",
+  "config": {
+    "num_classes": 4,
+    "weight_learning_rate": 0.5,
+    "weight_floor_mixing": 0.02,
+    "pseudo_confidence": 0.8,
+    "pseudo_agreement": 0.75,
+    "prototype_prior_count": 2.0,
+    "pseudo_momentum": 0.95,
+    "logit_scale": 100.0
+  },
+  "final_state": {
+    "weights": [
+      0.45951177075043426,
+      0.45951177075043426,
+      0.005000454511770756,
+      0.0759760039873607
+    ],
+    "labeled_count": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "pseudo_count": [
+      17,
+      22,
+      25,
+      19
+    ]
+  }
+}

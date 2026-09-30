@@ -1,0 +1,36 @@
+purpose: post_hoc_review_diagnostics_not_new_model_selection
+confirmation_seeds: [10, 11, 12, 13, 14]
+streams: [iid_random, abrupt_domain, class_correlated]
+datasets: [PACS, OfficeHome, TerraIncognita]
+backbones: [openai_vitb16, openclip_vitl14]
+annotation_budget_percent: 1.0
+frozen_controller:
+  pseudo_confidence: 0.80
+  pseudo_agreement: 0.75
+  persistence_switch_rate: 0.35
+  risk_entropy_threshold: 0.50
+tda:
+  annotation_budget_percent: 0.0
+  entropy_gate: natural_log_entropy_divided_by_log2_number_of_classes
+  official_commit: e697fb0c8078cdeff93daa56bcf8860702542069
+  positive: {capacity: 3, alpha: 2.0, beta: 5.0}
+  negative: {capacity: 2, alpha: 0.117, beta: 1.0}
+  entropy_interval_open: [0.2, 0.5]
+  probability_mask_interval_open: [0.03, 1.0]
+  scope: single_view_cached_feature_replay_not_end_to_end_reproduction
+threshold_diagnostic:
+  seed: 10
+  one_at_a_time: true
+  pseudo_confidence: [0.70, 0.80, 0.90]
+  persistence_switch_rate: [0.25, 0.35, 0.45]
+  risk_entropy_threshold: [0.40, 0.50, 0.60]
+  configurations_including_shared_default: 7
+  total_runs: 126
+  selection: none
+  baseline: freshly_replayed_default_in_same_runtime
+logging:
+  main: full_events_by_default
+  review_anchors: summary_only
+  threshold_diagnostic: summary_only
+  tda: prediction_traces_and_provenance
+public_preregistration_claim: false

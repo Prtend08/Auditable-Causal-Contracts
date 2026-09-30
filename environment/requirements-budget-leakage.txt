@@ -1,0 +1,4 @@
+# Recorded new paired-budget server runtime: Python 3.10.8.
+# Observed dependencies, not a clean-install-tested environment or BLAS lock.
+numpy==1.26.3
+pandas==2.2.3

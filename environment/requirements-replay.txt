@@ -1,0 +1,7 @@
+# Current review CPU replay and synthetic tests (Python 3.12).
+# This does not recreate the historical BLAS binary or archived trajectories.
+numpy==2.3.5
+# The event-enabled budget-leakage runner also uses pandas.
+# These are local review-runtime versions, not a historical/server lock.
+pandas==3.0.1
+pytest==9.1.1

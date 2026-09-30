@@ -1,0 +1,65 @@
+protocol_version: 1
+frozen_at: "2026-08-14 Asia/Shanghai"
+title: "Ask-or-Adapt: Budget-Aware Selective Supervision for Streaming Visual Recognition"
+research_status: "Phase-1 feasibility; no result-dependent claims preregistered"
+ethics:
+  human_participants: false
+  oracle: "Ground-truth annotations from public datasets simulate a label oracle"
+  leakage_rule: "Predict and score first; after a budget segment closes, reveal one queried label and then update memories; queried samples are never pseudo-adapted"
+backbone:
+  family: "OpenAI CLIP"
+  architecture: "ViT-B/16"
+  prompt: "a photo of a {class}."
+  image_size: 224
+datasets:
+  phase_1:
+    name: PACS
+    domains: [art_painting, cartoon, photo, sketch]
+    classes: [dog, elephant, giraffe, guitar, horse, house, person]
+    expected_images: 9991
+streams:
+  - iid_random
+  - abrupt_domain
+  - class_correlated
+seeds_phase_1: [0, 1, 2, 3, 4]
+seeds_main_if_phase_1_passes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+budgets_percent: [0.1, 0.5, 1.0, 2.0, 5.0]
+query_strategies:
+  - random
+  - periodic
+  - entropy
+  - margin
+  - disagreement
+  - ask_or_adapt
+experts:
+  - zero_shot_text
+  - labeled_prototype
+  - pseudo_labeled_prototype
+  - conservative_hybrid
+controller:
+  weight_learning_rate: 0.5
+  weight_floor_mixing: 0.02
+  pseudo_confidence: 0.80
+  pseudo_agreement: 0.75
+  prototype_prior_count: 2.0
+  pseudo_momentum: 0.95
+  logit_scale: 100.0
+primary_metrics:
+  - online_accuracy
+  - worst_window_accuracy
+  - expected_tail_accuracy
+  - query_count
+  - label_efficiency
+  - negative_adaptation_rate
+secondary_metrics:
+  - expected_calibration_error
+  - recovery_delay
+  - pseudo_memory_error_rate
+phase_1_decision_rule:
+  description: "Expand only after code/data audits pass and at least one selective strategy is non-inferior to random querying across aggregate PACS streams. All outcomes remain reportable."
+  accuracy_tolerance_percentage_points: 0.10
+reporting:
+  retain_all_seeds: true
+  retain_all_event_logs: true
+  disclose_actual_query_counts: true
+  no_dataset_specific_hyperparameter_tuning: true

@@ -1,0 +1,7 @@
+# Recorded CUDA TDA reference, not a complete independently tested lock.
+# Install CUDA 12.1 wheels from the official PyTorch distribution index.
+# Use a separate environment from the current NumPy 2.x CPU replay environment.
+torch==2.1.2
+# Needed for optional feature extraction, not TDA cached replay:
+torchvision==0.16.2
+numpy>=1.26,<2

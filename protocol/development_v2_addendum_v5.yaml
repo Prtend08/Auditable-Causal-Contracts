@@ -1,0 +1,34 @@
+protocol_name: risk_aware_controller_development_v5
+registered_at_local: '2026-08-14'
+status: frozen_before_seed_0_to_4_development_grid
+motivation: >-
+  The frozen cross-benchmark audit showed that disagreement was useful on PACS
+  but anti-informative on TerraIncognita, and that pseudo-label memory error was
+  about 35 percent on TerraIncognita. This addendum develops a risk-aware query
+  switch and a conservative pseudo-update threshold without using the held-out
+  confirmation seeds.
+development_seeds: [0, 1, 2, 3, 4]
+sealed_confirmation_seeds: [10, 11, 12, 13, 14]
+datasets: [PACS, OfficeHome, TerraIncognita]
+backbones: [OpenAI_CLIP_ViT-B-16, OpenCLIP_ViT-L-14]
+streams: [iid_random, abrupt_domain, class_correlated]
+budget_percent: [1.0]
+controller:
+  strategy: ask_or_adapt_v2
+  risk_signal: mean normalized entropy within the exact-budget segment
+  risk_entropy_threshold: 0.50
+  low_risk_query_score: geometric mean of entropy, expert disagreement, and class coverage
+  high_risk_query_score: margin uncertainty
+  persistence_gate: unchanged at switch rate 0.35 for low-risk segments
+development_candidates:
+  pseudo_confidence: [0.80, 0.90, 0.95]
+  pseudo_agreement: 0.75
+selection_rule: >-
+  Select one global pseudo_confidence value by highest macro mean online accuracy
+  over all 90 paired development conditions. Ties are broken by lower negative
+  adaptation rate, then higher worst-window accuracy. No dataset-specific values.
+confirmation_reporting:
+  - Report all six dataset-backbone blocks and all three streams.
+  - Compare against every fixed policy and the dynamic-entropy selection-only comparator.
+  - Retain the failed frozen v1 cross-benchmark study as development evidence.
+  - Do not change thresholds after viewing seeds 10 to 14.

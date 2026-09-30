@@ -1,0 +1,84 @@
+protocol_name: multibenchmark_and_backbone_addendum_v3
+registered_at_local: '2026-08-14'
+status: frozen_before_new_benchmark_runs
+motivation: >-
+  Address external-validity, many-class, backbone, uncertainty, and component-
+  validation risks identified by the prior review. The Ask-or-Adapt controller,
+  update rules, thresholds, and persistence gate are unchanged from the PACS
+  confirmation protocol.
+
+primary_cross_dataset_replication:
+  backbone: OpenAI CLIP ViT-B/16
+  datasets:
+    - name: PACS
+      samples: 9991
+      classes: 7
+      domains: 4
+    - name: OfficeHome
+      samples: 15588
+      classes: 65
+      domains: 4
+    - name: TerraIncognita
+      samples: 24788
+      classes: 10
+      domains: 4
+  streams: [iid_random, abrupt_domain, class_correlated]
+  seeds: [5, 6, 7, 8, 9]
+  budget_percent: [1.0]
+  strategies: [random, periodic, entropy, margin, disagreement, ask_or_adapt]
+  primary_metric: online_accuracy
+  secondary_metrics:
+    - gain_over_zero_shot
+    - worst_window_accuracy
+    - negative_adaptation_rate
+    - expected_calibration_error
+
+backbone_replication:
+  backbone: OpenCLIP ViT-L/14 LAION-2B-s32B-b82K
+  datasets: [PACS, OfficeHome, TerraIncognita]
+  streams: [iid_random, abrupt_domain, class_correlated]
+  seeds: [5, 6, 7, 8, 9]
+  budget_percent: [1.0]
+  strategies: [random, periodic, entropy, margin, disagreement, ask_or_adapt]
+  note: All controller hyperparameters remain fixed; the text/image encoder alone changes.
+
+component_ablation:
+  backbone: OpenAI CLIP ViT-B/16
+  datasets: [PACS, OfficeHome, TerraIncognita]
+  streams: [iid_random, abrupt_domain, class_correlated]
+  seeds: [5, 6, 7, 8, 9]
+  budget_percent: [1.0]
+  variants:
+    - ask_or_adapt
+    - a2a_no_gate
+    - a2a_no_entropy
+    - a2a_no_disagreement
+    - a2a_no_coverage
+
+statistics:
+  unit: paired run with identical dataset, stream, seed, budget, and backbone
+  confidence_interval: paired bootstrap 95%, resampling seeds within dataset-stream strata
+  tests: two-sided paired permutation tests
+  multiplicity: Holm correction within each prespecified comparison family
+  effect_reporting: mean paired difference in percentage points and standardized paired effect
+  alpha: 0.05
+
+figures:
+  - dataset_by_policy_delta_heatmap
+  - zero_shot_headroom_vs_gain_scatter
+  - component_ablation_heatmap
+  - budget_accuracy_curve_on_PACS
+
+audit_gates:
+  - exact_query_count_per_run
+  - no_prediction_uses_current_sample_label
+  - no_sample_is_both_queried_and_pseudo_labeled
+  - all_event_logs_have_sha256
+  - cached_features_and_weights_have_sha256
+  - no failed_or_incomplete_runs_in_manuscript_aggregates
+
+reporting_constraints:
+  - Do not claim guaranteed acceptance or state of the art.
+  - Do not merge protocol-incompatible numbers into the primary comparison table.
+  - Report all registered datasets and backbone runs, including unfavorable results.
+  - Label this addendum as a reviewer-risk-driven extension, not a preregistered original hypothesis.

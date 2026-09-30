@@ -1,0 +1,30 @@
+{
+  "release_name": "Ask-or-Adapt_Code_20260930",
+  "source_copy_files": 50,
+  "python_files_syntax_checked": 32,
+  "source_copies_sha256_match": true,
+  "allowlisted_text_files_only": true,
+  "excluded": [
+    "datasets",
+    "weights",
+    "NPZ",
+    "CSV",
+    "event logs",
+    "results",
+    "images",
+    "PDF",
+    "DOCX",
+    "nested archives",
+    "bytecode",
+    "credentials"
+  ],
+  "credential_scan": "No matches for private-key, common access-token, credential-literal/URL, or personal-workspace-path patterns. Pattern scan is not a universal secret-detection guarantee.",
+  "public_upload_status": "Prepared locally; no public URL assigned by packaging.",
+  "unit_tests": {
+    "passed": 7,
+    "exit_code": 0,
+    "python": "3.12.14",
+    "scope": "Packaged synthetic core tests; no benchmark data."
+  },
+  "test_scope": "This artifact does not claim a clean-install or end-to-end dataset reproduction."
+}

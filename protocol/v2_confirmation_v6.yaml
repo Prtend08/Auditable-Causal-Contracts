@@ -1,0 +1,39 @@
+protocol_name: risk_aware_multibench_confirmation_v6
+registered_at_local: '2026-08-14'
+status: frozen_before_seed_10_to_14_runs
+selected_from_development:
+  development_seeds: [0, 1, 2, 3, 4]
+  pseudo_confidence: 0.80
+  risk_entropy_threshold: 0.50
+  selection_record: results/v2_development_v5/selection.json
+confirmation:
+  seeds: [10, 11, 12, 13, 14]
+  datasets: [PACS, OfficeHome, TerraIncognita]
+  backbones: [OpenAI_CLIP_ViT-B-16, OpenCLIP_ViT-L-14]
+  streams: [iid_random, abrupt_domain, class_correlated]
+  budget_percent: [1.0]
+  strategies:
+    - random
+    - periodic
+    - entropy
+    - margin
+    - disagreement
+    - dynamic_entropy_online
+    - ask_or_adapt_v2
+  expected_runs: 630
+  event_logging: complete
+statistics:
+  paired_unit: dataset_backbone_stream_seed
+  primary_metric: online_accuracy
+  secondary_metrics:
+    - gain_over_zero_shot
+    - worst_window_accuracy
+    - negative_adaptation_rate
+    - expected_calibration_error
+  confidence_interval: stratified_seed_bootstrap_95_percent
+  test: exact_two_sided_sign_flip_on_18_dataset_backbone_stream_strata
+  multiplicity: Holm_across_six_comparators
+reporting:
+  - Report all results even if the risk-aware version is not superior.
+  - Treat the seed 5 to 9 study as development evidence after its failure was observed.
+  - Make no threshold or method changes after seeds 10 to 14 start.

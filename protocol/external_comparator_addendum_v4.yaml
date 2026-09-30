@@ -1,0 +1,30 @@
+protocol_name: external_selection_comparator_addendum_v4
+registered_at_local: '2026-08-14'
+status: frozen_before_external_comparator_runs
+motivation: >-
+  Add a protocol-aligned neighboring query comparator after literature audit.
+  The closest method, TAPS (arXiv:2507.20028), combines its dynamic entropy
+  trigger with multi-view prompt tuning, a bounded labeled buffer, and source
+  class statistics; no author implementation was located during the audit.
+comparator:
+  name: dynamic_entropy_online
+  scope: selection-rule reproduction, not an official or full TAPS reproduction
+  trigger:
+    warmup_samples: 30
+    warmup_entropy_threshold: 0.9
+    standard_z: 1.645
+    over_budget_z: 1.96
+    fallback: query the current sample at the end of each exact-budget segment
+  adaptation: same prototype controller as every in-paper query-policy comparison
+  timing: query the current sample immediately when the threshold fires
+  exact_budget: one query per chronological budget segment
+matrix:
+  datasets: [PACS, OfficeHome, TerraIncognita]
+  backbones: [OpenAI_CLIP_ViT-B-16, OpenCLIP_ViT-L-14]
+  streams: [iid_random, abrupt_domain, class_correlated]
+  seeds: [5, 6, 7, 8, 9]
+  budget_percent: [1.0]
+reporting_constraints:
+  - Call the comparator TAPS-inspired or published-rule selection-only.
+  - Never label it TAPS without the qualifier that prompt tuning and alignment are absent.
+  - Compare under identical label counts and report its favorable results if any.
