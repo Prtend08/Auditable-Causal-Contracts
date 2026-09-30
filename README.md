@@ -2,8 +2,8 @@
 
 Reference implementation for *Auditable Causal Contracts for Budgeted Selective
 Supervision in Streaming Visual Recognition*. Ask-or-Adapt is the controller
-and project name. This directory is the upload-ready repository layout for the
-paper. It contains source, protocols, requirements, an event schema, and one
+and project name. This public repository contains the paper's source,
+protocols, requirements, an event schema, and one
 small deterministic audit fixture. Benchmark images, weights, feature caches,
 prediction arrays, and the full benchmark event archive are not redistributed.
 
@@ -22,6 +22,14 @@ python examples/audit_fixture/verify_audit_fixture.py
 The command checks the event count, sequential positions, query count, online
 accuracy, and the SHA-256 recorded in `summary.json`. The fixture is not a
 benchmark result; it is a reproducible audit demonstration.
+
+Use tag `v1.0.1` for the manuscript release. It preserves file bytes across
+Git checkouts so the fixture SHA-256 is unchanged on Windows and Linux. The
+full benchmark event archive and its per-run hash manifest are not included;
+the fixture verifies the audit procedure, not all reported benchmark results.
+`RELEASE_VALIDATION.json` records the earlier code-only package validation.
+The root `_Code_20260930.zip` is retained as a legacy archive; use the
+expanded source tree and fixture for this release.
 
 - [REPRODUCIBILITY.md](REPRODUCIBILITY.md): CPU/GPU commands and numerical limitations.
 - [EVENT_SCHEMA.md](EVENT_SCHEMA.md): cache, event, summary, and TDA trace schemas.
